@@ -16,11 +16,13 @@ function App() {
 				<Routes>
           			<Route path="/" element={<Example />} />
 					<Route path="/user" element={<UserList />} />
-					<Route path='/login' element={<LoginForm/>} />
-					<Route path='/register' element={<UserForm/>} />
+					<Route path='/login' element={<LoginForm />} />
+					<Route path='/register' element={<UserForm />} />
+					<Route path='/user/:id' element={<UserForm />} />
+					<Route path='/user/deleted/:id' element={<UserList />} />
 				</Routes>
+				<Footer />
 			</BrowserRouter>
-			<Footer />
 		</div>
 		</>
 	);

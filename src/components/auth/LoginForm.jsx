@@ -2,7 +2,7 @@ import { Link } from 'react-router-dom';
 
 export default function LoginForm() {
 	return (
-		<section>
+		<section className='mt-7'>
 			<form className="max-w-md mx-auto px-5 py-5 pt-6 pb-10 mb-4 bg-gray-800 rounded-lg shadow-lg">
 				<div className="mb-4">
 					<label
@@ -43,7 +43,7 @@ export default function LoginForm() {
 				</div>
 				<div className="flex items-center justify-between">
 					<button
-						className="bg-blue-700 hover:bg-blue-500 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline"
+						className="bg-teal-800 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline"
 						type="submit"
 					>
 						Login
@@ -52,7 +52,7 @@ export default function LoginForm() {
 			</form>
 			<div className="text-center text-gray-300">
 				¿No tienes una cuenta?{' '}
-				<Link to="/register" className="text-blue-500 hover:text-blue-700">
+				<Link to="/register" className="text-teal-500 hover:text-teal-700">
 					Regístrate aquí
 				</Link>
 			</div>

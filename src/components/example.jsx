@@ -1,5 +1,5 @@
 import { useDispatch, useSelector } from 'react-redux';
-import { decrement, increment } from '../storage/features/numberSlice';
+import { decrement, division, increment, multiplication, reset } from '../storage/features/numberSlice';
 
 function Profile({ user }) {
 	return (
@@ -26,16 +26,34 @@ function ButtonExaple() {
 	return (
 		<>
 			<button
-				className="mx-4 bg-blue-900 hover:bg-blue-950 text-blue-50 rounded font-bold py-2 px-4"
+				className="ml-4 bg-blue-900 hover:bg-blue-950 text-blue-50 rounded font-bold py-2 px-4"
 				onClick={() => dispatch(increment())}
 			>
 				Sumar
 			</button>
 			<button
-				className="bg-red-900 hover:bg-red-950 text-blue-50 rounded font-bold py-2 px-4"
+				className="ml-4 bg-red-900 hover:bg-red-950 text-blue-50 rounded font-bold py-2 px-4"
 				onClick={() => dispatch(decrement())}
 			>
 				Restar
+			</button>
+      <button
+				className="ml-4 bg-amber-900 hover:bg-amber-950 text-blue-50 rounded font-bold py-2 px-4"
+				onClick={() => dispatch(division())}
+			>
+				Dividir entre 2
+			</button>
+      <button
+				className="ml-4 bg-yellow-900 hover:bg-yellow-950 text-blue-50 rounded font-bold py-2 px-4"
+				onClick={() => dispatch(multiplication())}
+			>
+				Multiplicar entre 2
+			</button>
+      <button
+				className="ml-4 bg-green-900 hover:bg-green-950 text-blue-50 rounded font-bold py-2 px-4"
+				onClick={() => dispatch(reset())}
+			>
+				Resetear
 			</button>
 			<p className="mx-4"> El contador va en: {number}</p>
 		</>
@@ -84,7 +102,7 @@ export default function Example() {
 
 	return (
 		<>
-			<section className="p-100">
+			<section className="p-100 mt-7">
 				{users.map((user) => (
 					<Profile key={user.name} user={user} />
 				))}
