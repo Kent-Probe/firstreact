@@ -5,11 +5,14 @@ import MessageError from '../inputs/messageError';
 import Swal from 'sweetalert2';
 import GroupInput from '../inputs/groupInput';
 import ButtonForm from '../inputs/buttonForm';
+import { useDispatch } from 'react-redux';
+import { loginSucces } from '../../storage/features/authSlice';
 
 export default function LoginForm() {
 	const navigate = useNavigate();
 	const [login] = useLoginMutation();
 	const [error, setError] = useState(false);
+	const dispatch = useDispatch();
 	const handleSubmit = async (e) => {
 		e.preventDefault();
 		try {
@@ -22,6 +25,8 @@ export default function LoginForm() {
 				setError(true);
 				return;
 			} else setError(false);
+			localStorage.setItem('session', JSON.stringify(response.data));
+			dispatch(loginSucces(response.data))
 			Swal.fire({
 				position: 'top',
 				icon: 'success',

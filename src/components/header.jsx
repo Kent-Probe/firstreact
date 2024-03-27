@@ -1,4 +1,7 @@
-import { Link, useLocation } from 'react-router-dom';
+import { useDispatch, useSelector } from 'react-redux';
+import { Link, useLocation, useNavigate } from 'react-router-dom';
+import { logout } from '../storage/features/authSlice';
+import { useEffect } from 'react';
 
 const navigation = [
 	{
@@ -17,8 +20,38 @@ const navigation = [
 	},
 ];
 
+export function OptHeader({ name, to, className }) {
+	return (
+		<Link to={to} className={className}>
+			{name}
+		</Link>
+	);
+}
+
 function Header() {
+	const navigate = useNavigate();
 	const location = useLocation();
+	const dispatch = useDispatch();
+	const isAuthenticated = useSelector((state) => state.auth.isAuthenticated);
+
+	const handleLogout = (e) => {
+		e.preventDefault();
+		dispatch(logout());
+		localStorage.removeItem('session')
+		navigate('/login');
+	}
+
+	navigation.map((item, idenx) => {
+		if (item.to === location.pathname) {
+			navigation[idenx].className =
+				'bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium';
+			navigation[idenx].current = true;
+		} else {
+			navigation[idenx].className =
+				'text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium';
+			navigation[idenx].current = false;
+		}
+	});
 
 	return (
 		<header className="bg-gray-800 shadow-md">
@@ -34,32 +67,39 @@ function Header() {
 						</div>
 						<nav className="hidden sm:ml-6 sm:block">
 							<ul className="flex space-x-4">
-								{navigation.map((item, index) => (
-									<li key={index}>
-										<Link
-											to={item.to}
-											className={`
-                                                ${
-																	location.pathname === item.to
-																		? 'bg-gray-900 text-white rounded-md px-3 py-2 text-sm font-medium'
-																		: item.className
-																}
-                                            `}
-										>
-											{item.name}
-										</Link>
-									</li>
-								))}
+								{navigation.map((item, index) => {
+									if (!isAuthenticated && item.to == '/user')
+										return null;
+									return (
+										<li key={index}>
+											<OptHeader
+												to={item.to}
+												className={item.className}
+												name={item.name}
+											/>
+										</li>
+									);
+								})}
 							</ul>
 						</nav>
 					</div>
 					<div className="relative flex rounded-full text-sm focus:outline-none focus:ring-2 px-5">
-						<Link
-							to="/login"
-							className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
-						>
-							Login
-						</Link>
+						{isAuthenticated ? (
+							<button
+								onClick={handleLogout}
+								className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
+							>
+								logout
+							</button>
+						) : (
+							<OptHeader
+								to={'/login'}
+								name={'Login'}
+								className={
+									'text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium'
+								}
+							/>
+						)}
 					</div>
 				</div>
 			</div>

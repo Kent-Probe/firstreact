@@ -1,9 +1,17 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const userSlice = createApi({
-	reducerPath: 'users',
+    reducerPath: 'users',
 	baseQuery: fetchBaseQuery({
-		baseUrl: 'http://localhost:3000',
+        baseUrl: 'http://localhost:3000',
+        prepareHeaders: (headers, {}) => {
+            const local = JSON.parse(localStorage.getItem('session'));
+            if(local){
+                const token = local.token
+                if(token) headers.set('Authorization', `Bearer ${token}`);
+            }
+            return headers;
+        }
 	}),
 	endpoints: (builder) => ({
 		getUsers: builder.query({

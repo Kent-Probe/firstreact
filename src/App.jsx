@@ -4,22 +4,35 @@ import Footer from './components/footer';
 import Header from './components/header';
 import UserList from './components/users/usersList';
 import Example from './components/example';
-import UserForm from './components/users/userForm';
 import LoginForm from './components/auth/LoginForm';
+import { useDispatch } from 'react-redux';
+import { useEffect } from 'react';
+import { loginSucces } from './storage/features/authSlice';
+import PrivateRoute from './components/private/privateRouter';
+import UserShow from './components/users/userShow';
+import UserRegister from './components/users/userRegister';
 
 function App() {
+	const dispatch = useDispatch();
+	useEffect(() => {
+		const sessionData = localStorage.getItem('session');
+		if(sessionData){
+			dispatch(loginSucces(JSON.parse(sessionData)));
+		}
+	})
 	return (
 		<>
 		<div className='min-h-screen flex flex-col'>
 			<BrowserRouter>
 				<Header />
 				<Routes>
-          			<Route path="/" element={<Example />} />
-					<Route path="/user" element={<UserList />} />
+					<Route path="/user" element={<PrivateRoute Component={UserList}/>} />
+					<Route path='/user/:id' element={<PrivateRoute Component={UserShow} />} />
+					<Route path='/user/deleted/:id' element={<PrivateRoute Component={UserList} />} />
+					
+          			<Route path="/" element={ <Example />} />
 					<Route path='/login' element={<LoginForm />} />
-					<Route path='/register' element={<UserForm />} />
-					<Route path='/user/:id' element={<UserForm />} />
-					<Route path='/user/deleted/:id' element={<UserList />} />
+					<Route path='/register' element={<UserRegister />} />
 				</Routes>
 				<Footer />
 			</BrowserRouter>
