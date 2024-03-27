@@ -45,6 +45,22 @@ export const userSlice = createApi({
 			}),
 			invalidatesTags: ['users', 'user'],
 		}),
+		uploadAvatar: builder.mutation({
+			query: (body) => ({
+				url: `/users/uploads/${body.id}`,
+				method: 'POST',
+				body: body.file,
+			}),
+			invalidatesTags: ['users', 'user'],
+		}),
+        login: builder.mutation({
+            query: (body) => ({
+                url: `/auth/login`,
+                method: 'POST',
+                body: body,
+            }),
+            invalidatesTags: ['users', 'user'],
+        })
 	}),
 });
 
@@ -54,6 +70,8 @@ export const {
 	useGetUserByIdQuery,
 	useDeletedUserMutation,
 	useUpdateUserMutation,
+    useUploadAvatarMutation,
+    useLoginMutation,
 } = userSlice;
 /* 
 const users = [

@@ -2,10 +2,13 @@ import {
 	useCreateUserMutation,
 	useGetUserByIdQuery,
 	useUpdateUserMutation,
+	useUploadAvatarMutation,
 } from '../../storage/features/userSlice';
 import { useNavigate, useParams } from 'react-router-dom';
 import Swal from 'sweetalert2';
 import PageError from '../PageError';
+import InputFile from '../inputs/inputFile';
+import { useState } from 'react';
 
 export function ButtonForm({ text, type = 'submit' }) {
 	return (
@@ -68,6 +71,8 @@ export default function UserForm() {
 	const params = useParams();
 	const [createUser] = useCreateUserMutation();
 	const [updateUser] = useUpdateUserMutation();
+	const [uploadAvatar] = useUploadAvatarMutation();
+	const [file, setFile] = useState(null)
 	let user = null;
 
 	if (params.id) {
@@ -87,21 +92,24 @@ export default function UserForm() {
 		console.log(error);
 		user = data;
 	}
+	const handleChangeFile= (e) =>{
+		setFile(e.target.files)
+	}
 	const handleSubmitUpdate = async (e) => {
 		e.preventDefault();
 		const newUser = {
-			id: e.target.id.value
+			id: e.target.id.value,
 		};
-		if(e.target.name.value){
+		if (e.target.name.value) {
 			newUser.name = e.target.name.value;
 		}
-		if(e.target.email.value){
-            newUser.email = e.target.email.value;
-        }
-		if(e.target.lastname.value){
+		if (e.target.email.value) {
+			newUser.email = e.target.email.value;
+		}
+		if (e.target.lastname.value) {
 			newUser.lastname = e.target.lastname.value;
 		}
-		console.log(newUser)
+		console.log(newUser);
 		const responseUpdate = await updateUser(newUser);
 		if (responseUpdate.error) {
 			Swal.fire({
@@ -114,6 +122,11 @@ export default function UserForm() {
 				navigate('/user');
 			});
 		} else {
+			if(file){
+				const formData = new FormData()
+				formData.append('file', file[0])
+				uploadAvatar({id: newUser.id, file: formData});
+			}
 			Swal.fire({
 				position: 'bottom-end',
 				icon: 'success',
@@ -148,6 +161,11 @@ export default function UserForm() {
 				navigate('/register');
 			});
 		} else {
+			if(file){
+				const formData = new FormData()
+				formData.append('file', file[0])
+				uploadAvatar({id: newUser.id, file: formData});
+			}
 			Swal.fire({
 				position: 'bottom-end',
 				icon: 'success',
@@ -172,21 +190,21 @@ export default function UserForm() {
 			name: 'Name',
 			type: 'text',
 			id: 'name',
-			isRequired: user? false: true,
+			isRequired: user ? false : true,
 			user: user ? user.name : null,
 		},
 		{
 			name: 'Lastname',
 			type: 'text',
 			id: 'lastname',
-			isRequired: user? false: true,
+			isRequired: user ? false : true,
 			user: user ? user.lastname : null,
 		},
 		{
 			name: 'Email',
 			type: 'email',
 			id: 'email',
-			isRequired: user? false: true,
+			isRequired: user ? false : true,
 			user: user ? user.email : null,
 		},
 		{
@@ -199,7 +217,9 @@ export default function UserForm() {
 	return (
 		<section className="mt-7">
 			<form
-				onSubmit={params.id == null ? handleSubmitCreated : handleSubmitUpdate}
+				onSubmit={
+					params.id == null ? handleSubmitCreated : handleSubmitUpdate
+				}
 				className="max-w-md mx-auto px-5 py-5 pt-6 pb-10 mb-4 bg-gray-800 rounded-lg shadow-lg"
 			>
 				{formInfo.map((form) => {
@@ -213,15 +233,18 @@ export default function UserForm() {
 									id={form.id}
 									isRequired={form.isRequired}
 									user={form.user}
-								/>						
+								/>
 							</>
 						);
 					}
 				})}
+				<InputFile key="uploadFile" props={{
+					handleChangeFile: handleChangeFile
+				}}/>
 				{params.id == null ? (
-					<ButtonForm text="Register" type="submit" />
+					<ButtonForm key="btn-register" text="Register" type="submit" />
 				) : (
-					<ButtonForm text="Save register" type="submit" />
+					<ButtonForm key="btn-update" text="Save register" type="submit" />
 				)}
 			</form>
 		</section>

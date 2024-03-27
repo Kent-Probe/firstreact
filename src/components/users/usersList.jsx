@@ -37,7 +37,7 @@ export default function UserList() {
 					text: 'Your file has been deleted.',
 					icon: 'success',
 				});
-				window.location.reload();
+				window.location.reload()
 			}
 		});
 	};
@@ -69,7 +69,7 @@ export default function UserList() {
 								<td className="py-3 px-6 text-center">
 									<img
 										className="w-12 h-12 rounded-full"
-										src={user.avatar}
+										src={`http://localhost:3000/${user.avatar}`}
 										alt="Avatar"
 									/>
 								</td>
