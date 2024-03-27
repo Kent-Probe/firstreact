@@ -3,9 +3,11 @@ import { useLoginMutation } from '../../storage/features/userSlice';
 import { useState } from 'react';
 import MessageError from '../inputs/messageError';
 import Swal from 'sweetalert2';
+import GroupInput from '../inputs/groupInput';
+import ButtonForm from '../inputs/buttonForm';
 
 export default function LoginForm() {
-	const navigate = useNavigate()
+	const navigate = useNavigate();
 	const [login] = useLoginMutation();
 	const [error, setError] = useState(false);
 	const handleSubmit = async (e) => {
@@ -14,14 +16,12 @@ export default function LoginForm() {
 			const user = {
 				email: e.target.email.value,
 				password: e.target.password.value,
-			}
-		    const response = await login(user);
-			if(response.error){
+			};
+			const response = await login(user);
+			if (response.error) {
 				setError(true);
 				return;
-			}else(
-				setError(false)
-			)
+			} else setError(false);
 			Swal.fire({
 				position: 'top',
 				icon: 'success',
@@ -31,61 +31,37 @@ export default function LoginForm() {
 			}).then(() => {
 				navigate('/user');
 			});
-		} catch (error) {
-			
-		}
+		} catch (error) {}
 	};
 	return (
 		<section className="mt-7">
-			<form onSubmit={handleSubmit} className="max-w-md mx-auto px-5 py-5 pt-6 pb-10 mb-4 bg-gray-800 rounded-lg shadow-lg">
-				<div className="mb-4">
-					<label
-						className="block text-gray-300 font-bold mb-2"
-						htmlFor="email"
-					>
-						Email
-					</label>
-					<input
-						required
-						className="appearance-none shadow border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-gray-200 focus:bg-white 
-                        invalid:border-pink-500 invalid:text-pink-600
-                        focus:invalid:border-pink-500 invalid:border-2 focus:invalid:ring-pink-500"
-						id="email"
-						type="email"
-						placeholder="Email"
-						name="email"
+			<form
+				onSubmit={handleSubmit}
+				className="max-w-md mx-auto px-5 py-5 pt-6 pb-10 mb-4 bg-gray-800 rounded-lg shadow-lg"
+			>
+				<GroupInput
+					id="email"
+					name="Email"
+					type="email"
+					isRequired="true"
+					key="email"
+				/>
+				<GroupInput
+					id="password"
+					name="Password"
+					type="password"
+					isRequired="true"
+					key="password"
+				/>
+				{error == true ? (
+					<MessageError
+						message="Invalid Credentials"
+						isMessageGeneral="true"
 					/>
-				</div>
-				<div className="mb-4">
-					<label
-						className="block text-gray-300 font-bold mb-2"
-						htmlFor="password"
-					>
-						Password
-					</label>
-					<input
-						required
-						minLength="3"
-						className="appearance-none shadow border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-gray-200 focus:bg-white 
-                        invalid:border-pink-500 invalid:border-2 invalid:text-pink-600
-                        focus:invalid:border-pink-500 focus:invalid:ring-pink-500"
-						id="password"
-						type="password"
-						placeholder="Password"
-						name="password"
-					/>
-				</div>
-				{
-					error == true ? <MessageError message="Invalid Credentials" isMessageGeneral='true'/>: '' 
-				}
-				<div className="flex items-center justify-between">
-					<button
-						className="bg-teal-800 hover:bg-teal-600 text-white font-bold py-2 px-4 rounded-lg focus:outline-none focus:shadow-outline"
-						type="submit"
-					>
-						Login
-					</button>
-				</div>
+				) : (
+					''
+				)}
+				<ButtonForm text="Login" type="submit" />
 			</form>
 			<div className="text-center text-gray-300">
 				¿No tienes una cuenta?{' '}
