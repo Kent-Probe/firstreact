@@ -1,8 +1,10 @@
 import { createSlice } from "@reduxjs/toolkit"
+import { decodeToken } from "../../utils/decodeToken";
 
 const initialState = {
     token: null,
-    isAuthenticated: false
+    isAuthenticated: false,
+    user: null,
 }
 
 const authSlice = createSlice({
@@ -12,6 +14,7 @@ const authSlice = createSlice({
         loginSucces: (state, action) => {
             state.token = action.payload.token;
             state.isAuthenticated = true;
+            state.user = decodeToken(action.payload.token);
         },
         logout: (state) => {
             state.token = null;

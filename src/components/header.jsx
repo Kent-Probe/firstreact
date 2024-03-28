@@ -1,7 +1,8 @@
 import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { logout } from '../storage/features/authSlice';
-import { useEffect } from 'react';
+import DropDownMenu from './buttons/dropDown';
+import { decodeToken } from '../utils/decodeToken';
 
 const navigation = [
 	{
@@ -29,6 +30,7 @@ export function OptHeader({ name, to, className }) {
 }
 
 function Header() {
+	const user = useSelector((state) => state.auth.user);
 	const navigate = useNavigate();
 	const location = useLocation();
 	const dispatch = useDispatch();
@@ -37,9 +39,9 @@ function Header() {
 	const handleLogout = (e) => {
 		e.preventDefault();
 		dispatch(logout());
-		localStorage.removeItem('session')
+		localStorage.removeItem('session');
 		navigate('/login');
-	}
+	};
 
 	navigation.map((item, idenx) => {
 		if (item.to === location.pathname) {
@@ -85,12 +87,13 @@ function Header() {
 					</div>
 					<div className="relative flex rounded-full text-sm focus:outline-none focus:ring-2 px-5">
 						{isAuthenticated ? (
-							<button
-								onClick={handleLogout}
-								className="text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium"
-							>
-								logout
-							</button>
+							<>
+								<DropDownMenu
+									name={user.name}
+									onClick={handleLogout}
+									src={user.avatar}
+								/>
+							</>
 						) : (
 							<OptHeader
 								to={'/login'}

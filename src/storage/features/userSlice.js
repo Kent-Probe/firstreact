@@ -4,12 +4,9 @@ export const userSlice = createApi({
     reducerPath: 'users',
 	baseQuery: fetchBaseQuery({
         baseUrl: 'http://localhost:3000',
-        prepareHeaders: (headers, {}) => {
-            const local = JSON.parse(localStorage.getItem('session'));
-            if(local){
-                const token = local.token
-                if(token) headers.set('Authorization', `Bearer ${token}`);
-            }
+        prepareHeaders: (headers, {getState}) => {
+            const token = getState().auth.token
+            if(token) headers.set('Authorization', `Bearer ${token}`);
             return headers;
         }
 	}),
