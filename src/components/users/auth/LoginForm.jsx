@@ -1,12 +1,12 @@
 import { Link, useNavigate } from 'react-router-dom';
-import { useLoginMutation } from '../../storage/features/userSlice';
+import { useLoginMutation } from '../../../storage/features/userSlice';
 import { useState } from 'react';
-import MessageError from '../inputs/messageError';
+import MessageError from '../../inputs/messageError';
 import Swal from 'sweetalert2';
-import GroupInput from '../inputs/groupInput';
-import ButtonForm from '../inputs/buttonForm';
+import GroupInput from '../../inputs/groupInput';
+import ButtonForm from '../../inputs/buttonForm';
 import { useDispatch } from 'react-redux';
-import { loginSucces } from '../../storage/features/authSlice';
+import { loginSucces } from '../../../storage/features/authSlice';
 
 export default function LoginForm() {
 	const navigate = useNavigate();
@@ -26,7 +26,7 @@ export default function LoginForm() {
 				return;
 			} else setError(false);
 			localStorage.setItem('session', JSON.stringify(response.data));
-			dispatch(loginSucces(response.data))
+			dispatch(loginSucces(response.data));
 			Swal.fire({
 				position: 'top',
 				icon: 'success',

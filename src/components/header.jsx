@@ -2,7 +2,6 @@ import { useDispatch, useSelector } from 'react-redux';
 import { Link, useLocation, useNavigate } from 'react-router-dom';
 import { logout } from '../storage/features/authSlice';
 import DropDownMenu from './buttons/dropDown';
-import { decodeToken } from '../utils/decodeToken';
 
 const navigation = [
 	{
@@ -92,6 +91,7 @@ function Header() {
 									name={user.name}
 									onClick={handleLogout}
 									src={user.avatar}
+									id={user.id}
 								/>
 							</>
 						) : (

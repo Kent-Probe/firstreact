@@ -4,6 +4,8 @@ export default function GroupInput({
 	id,
 	isRequired = false,
 	user = null,
+	error = null,
+	onChange = null
 }) {
 	// Definir los atributos según el tipo de input
 	let inputProps = {};
@@ -31,11 +33,12 @@ export default function GroupInput({
 			</label>
 			<input
 				{...inputProps}
-				className="appearance-none shadow border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-gray-200 invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 invalid:border-2 focus:invalid:ring-pink-500"
+				className={`${error != null ? "border-pink-500 text-pink-600 focus:border-pink-500 border-2 focus:ring-pink-500" : ""} appearance-none shadow border rounded w-full py-2 px-3 text-gray-900 leading-tight focus:outline-none focus:shadow-outline bg-gray-200 invalid:border-pink-500 invalid:text-pink-600 focus:invalid:border-pink-500 invalid:border-2 focus:invalid:ring-pink-500`}
 				id={id}
 				type={type}
-				name={name}
+				name={id}
 				placeholder={name}
+				onChange={onChange}
 			/>
 		</div>
 	);

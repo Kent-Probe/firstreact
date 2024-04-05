@@ -65,7 +65,37 @@ export const userSlice = createApi({
                 body: body,
             }),
             invalidatesTags: ['users', 'user'],
-        })
+        }),
+		getHouses: builder.query({
+			query: () => `/houses`,
+            providesTags: ['houses'],
+		}),
+		getHouseById: builder.query({
+			query: (id) => `/houses/${id}`,
+            providesTags: ['house'],
+		}),
+		addHouse: builder.mutation({
+			query: (newHouse) => ({
+                url: `/houses`,
+                method: 'POST',
+                body: newHouse,
+            }),
+            invalidatesTags: ['houses', 'house'],
+		}),
+		deleteHouse: builder.mutation({
+			query: (id) => ({
+                url: `/houses/${id}`,
+                method: 'DELETE',
+            }),
+            invalidatesTags: ['houses', 'house'],
+		}),
+		updateHouse: builder.mutation({
+			query: (updateHouse) => ({
+				url: `/houses/${updateHouse.id}`,
+                method: 'PATCH',
+                body: updateHouse,
+			})
+		})
 	}),
 });
 
@@ -76,6 +106,11 @@ export const {
 	useDeletedUserMutation,
 	useUpdateUserMutation,
     useUploadAvatarMutation,
+	useGetHousesQuery,
+    useGetHouseByIdQuery,
+    useAddHouseMutation,
+    useDeleteHouseMutation,
+    useUpdateHouseMutation,
     useLoginMutation,
 } = userSlice;
 /* 
