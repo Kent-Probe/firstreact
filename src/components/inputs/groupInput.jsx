@@ -3,7 +3,7 @@ export default function GroupInput({
 	type,
 	id,
 	isRequired = false,
-	user = null,
+	data = null,
 	error = null,
 	onChange = null
 }) {
@@ -11,7 +11,7 @@ export default function GroupInput({
 	let inputProps = {};
 	if (type === 'number') {
 		inputProps.min = '1';
-		inputProps.max = '999999999999999';
+		inputProps.max = '9999999999999999';
 	} else if (type === 'text' || type === 'password') {
 		inputProps.minLength = '3';
 	}
@@ -22,8 +22,8 @@ export default function GroupInput({
 	}
 
 	// Verificar si se proporcionó un usuario y si es así, establecer el valor del input
-	if (user != null) {
-		inputProps.defaultValue = user;
+	if (data != null) {
+		inputProps.defaultValue = data;
 	}
 
 	return (

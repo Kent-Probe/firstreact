@@ -5,8 +5,18 @@ import {
 } from '../../storage/features/userSlice';
 import Swal from 'sweetalert2';
 import PageError from '../PageError';
+import TableHead from '../table/tableHead';
 
 export default function UserList() {
+	const headerTh = [
+		{ name: 'Identificacion', className: 'text-center' },
+		{ name: 'Name', className: 'text-left' },
+		{ name: 'LastName', className: 'text-left' },
+		{ name: 'Email', className: 'text-left' },
+		{ name: 'Avatar', className: 'text-left' },
+		{ name: 'Options', className: 'text-center' },
+	];
+
 	/* const users = useSelector((state) => state.users); */
 	const [ deletedUser ] = useDeletedUserMutation();
 
@@ -46,20 +56,11 @@ export default function UserList() {
 		<section className="px-10 flex justify-center pb-10 mt-7">
 			<div className="overflow-hidden rounded-lg min-w-max w-full">
 				<table className="min-w-max w-full table-auto">
-					<thead>
-						<tr className="bg-gray-800 text-white uppercase text-sm leading-normal">
-							<th className="py-3 px-6 text-center">Identification</th>
-							<th className="py-3 px-6 text-left">Name</th>
-							<th className="py-3 px-6 text-left">LastName</th>
-							<th className="py-3 px-6 text-left">Email</th>
-							<th className="py-3 px-6 text-center">Avatar</th>
-							<th className="py-3 px-6 text-center">Options</th>
-						</tr>
-					</thead>
+					<TableHead headerTh={headerTh}
+					/>
 					<tbody className="text-gray-400 text-sm font-light">
 						{users.map((user) => (
 							<tr
-								key={user.id}
 								className="border-b border-gray-700 hover:bg-gray-700 hover:text-white"
 							>
 								<td className="py-3 px-6 text-center">{user.id}</td>

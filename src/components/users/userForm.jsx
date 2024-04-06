@@ -57,7 +57,6 @@ export default function UserForm() {
 		if (e.target.lastname.value) {
 			newUser.lastname = e.target.lastname.value;
 		}
-		console.log(newUser);
 		const responseUpdate = await updateUser(newUser);
 		if (responseUpdate.error) {
 			Swal.fire({
@@ -180,7 +179,7 @@ export default function UserForm() {
 									type={form.type}
 									id={form.id}
 									isRequired={form.isRequired}
-									user={form.user}
+									data={form.user}
 								/>
 							</>
 						);

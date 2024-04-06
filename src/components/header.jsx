@@ -5,15 +5,29 @@ import DropDownMenu from './buttons/dropDown';
 
 const navigation = [
 	{
-		name: 'Inicio',
+		name: 'Home',
 		to: '/',
 		className:
 			'text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium',
 		current: true,
 	},
 	{
-		name: 'Usuarios',
+		name: 'Users',
 		to: '/user',
+		className:
+			'text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium',
+		current: false,
+	},
+	{
+		name: 'Houses',
+		to: '/house',
+		className:
+			'text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium',
+		current: false,
+	},
+	{
+		name: 'Add House',
+		to: '/add_house',
 		className:
 			'text-gray-300 hover:bg-gray-700 hover:text-white rounded-md px-3 py-2 text-sm font-medium',
 		current: false,

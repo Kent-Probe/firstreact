@@ -71,7 +71,7 @@ export const userSlice = createApi({
             providesTags: ['houses'],
 		}),
 		getHouseById: builder.query({
-			query: (id) => `/houses/${id}`,
+			query: (code) => `/houses/${code}`,
             providesTags: ['house'],
 		}),
 		addHouse: builder.mutation({
@@ -83,18 +83,19 @@ export const userSlice = createApi({
             invalidatesTags: ['houses', 'house'],
 		}),
 		deleteHouse: builder.mutation({
-			query: (id) => ({
-                url: `/houses/${id}`,
+			query: (code) => ({
+                url: `/houses/${code}`,
                 method: 'DELETE',
             }),
             invalidatesTags: ['houses', 'house'],
 		}),
 		updateHouse: builder.mutation({
 			query: (updateHouse) => ({
-				url: `/houses/${updateHouse.id}`,
+				url: `/houses/${updateHouse.code}`,
                 method: 'PATCH',
                 body: updateHouse,
-			})
+			}),
+			invalidatesTags: ['houses', 'house'],
 		})
 	}),
 });
