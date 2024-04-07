@@ -39,14 +39,14 @@ export default function HouseUpdate() {
 		},
 		{
 			name: 'City',
-			type: 'text',
+			type: 'select',
 			id: 'city',
 			isRequired: true,
 			data: house[0].city,
 		},
 		{
 			name: 'State',
-			type: 'text',
+			type: 'select',
 			id: 'state',
 			isRequired: true,
 			data: house[0].state,
@@ -60,10 +60,11 @@ export default function HouseUpdate() {
 		},
 		{
 			name: 'Type',
-			type: 'text',
+			type: 'select',
 			id: 'type',
 			isRequired: true,
 			data: house[0].type,
+			valuesSelect: [{id: "appartament", name: "appartament"}, {id: "House", name: "House"}]
 		},
 		{
 			name: 'Zipcode',
@@ -88,10 +89,11 @@ export default function HouseUpdate() {
 		},
 		{
 			name: 'Parking',
-			type: 'text',
+			type: 'select',
 			id: 'parking',
 			isRequired: true,
 			data: house[0].parking ? 'yes' : 'no',
+			valuesSelect: [{id: "no", name: "no"}, {id: "yes", name: "yes"}]
 		},
 		{
 			name: 'Price',

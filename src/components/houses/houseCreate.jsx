@@ -1,7 +1,6 @@
-import { useNavigate, useParams } from 'react-router-dom';
-import { useAddHouseMutation, useGetHouseByIdQuery, useUpdateHouseMutation } from '../../storage/features/userSlice';
+import { useNavigate } from 'react-router-dom';
+import { useAddHouseMutation } from '../../storage/features/userSlice';
 import HouseShow from './houseShow';
-import PageError from '../PageError';
 import Swal from 'sweetalert2';
 
 export default function HouseCreate(){
@@ -23,13 +22,13 @@ export default function HouseCreate(){
 		},
 		{
 			name: 'City',
-			type: 'text',
+			type: 'select',
 			id: 'city',
 			isRequired: true,
 		},
 		{
 			name: 'State',
-			type: 'text',
+			type: 'select',
 			id: 'state',
 			isRequired: true,
 		},
@@ -41,9 +40,10 @@ export default function HouseCreate(){
 		},
 		{
 			name: 'Type',
-			type: 'text',
+			type: 'select',
 			id: 'type',
 			isRequired: true,
+            valuesSelect: [{id: "appartament", name: "appartament"}, {id: "House", name: "House"}]
 		},
 		{
 			name: 'Zipcode',
@@ -65,9 +65,10 @@ export default function HouseCreate(){
 		},
 		{
 			name: 'Parking',
-			type: 'text',
+			type: 'select',
 			id: 'parking',
 			isRequired: true,
+            valuesSelect: [{id: "no", name: "no"}, {id: "yes", name: "yes"}]
 		},
 		{
 			name: 'Price',
@@ -82,8 +83,8 @@ export default function HouseCreate(){
 		const newHouse = {
 			code: e.target.code.value,
             address: e.target.address.value,
-            city: e.target.city.value,
-            state: e.target.state.value,
+            city: e.target.city.options[e.target.city.selectedIndex].dataset.name,
+            state: e.target.state.options[e.target.state.selectedIndex].dataset.name,
             size: Number(e.target.size.value),
             type: e.target.type.value,
             zipcode: e.target.zipcode.value,
