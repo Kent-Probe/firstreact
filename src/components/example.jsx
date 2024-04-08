@@ -4,58 +4,58 @@ import { decrement, division, increment, multiplication, reset } from '../storag
 function Profile({ user }) {
 	return (
 		<>
-			<h1>{user.name}</h1>
-			<br />
-			<img
-				className="avatar"
-				src={user.imageUrl}
-				alt={'Photo of ' + user.name}
-				style={{
-					width: user.imageSize,
-					height: user.imageSize,
-					backgroundColor: 'black',
-				}}
-			/>
+			<div className="bg-gray-800 p-4 rounded-lg shadow-md">
+				<h1 className="text-white text-xl font-semibold mb-2">{user.name}</h1>
+				<img
+					className="avatar rounded-full"
+					src={user.imageUrl}
+					alt={'Photo of ' + user.name}
+					style={{
+						width: user.imageSize,
+						height: user.imageSize,
+					}}
+				/>
+			</div>
 		</>
 	);
 }
 
-function ButtonExaple() {
+function ButtonExample() {
 	const number = useSelector((state) => state.number.value);
 	const dispatch = useDispatch();
 	return (
 		<>
 			<button
-				className="ml-4 bg-blue-900 hover:bg-blue-950 text-blue-50 rounded font-bold py-2 px-4"
+				className="ml-4 bg-blue-900 hover:bg-blue-800 text-blue-50 rounded font-bold py-2 px-4 shadow-md"
 				onClick={() => dispatch(increment())}
 			>
 				Sumar
 			</button>
 			<button
-				className="ml-4 bg-red-900 hover:bg-red-950 text-blue-50 rounded font-bold py-2 px-4"
+				className="ml-4 bg-red-900 hover:bg-red-800 text-blue-50 rounded font-bold py-2 px-4 shadow-md"
 				onClick={() => dispatch(decrement())}
 			>
 				Restar
 			</button>
-      <button
-				className="ml-4 bg-amber-900 hover:bg-amber-950 text-blue-50 rounded font-bold py-2 px-4"
+			<button
+				className="ml-4 bg-amber-900 hover:bg-amber-800 text-blue-50 rounded font-bold py-2 px-4 shadow-md"
 				onClick={() => dispatch(division())}
 			>
 				Dividir entre 2
 			</button>
-      <button
-				className="ml-4 bg-yellow-900 hover:bg-yellow-950 text-blue-50 rounded font-bold py-2 px-4"
+			<button
+				className="ml-4 bg-yellow-900 hover:bg-yellow-800 text-blue-50 rounded font-bold py-2 px-4 shadow-md"
 				onClick={() => dispatch(multiplication())}
 			>
 				Multiplicar entre 2
 			</button>
-      <button
-				className="ml-4 bg-green-900 hover:bg-green-950 text-blue-50 rounded font-bold py-2 px-4"
+			<button
+				className="ml-4 bg-green-900 hover:bg-green-800 text-blue-50 rounded font-bold py-2 px-4 shadow-md"
 				onClick={() => dispatch(reset())}
 			>
 				Resetear
 			</button>
-			<p className="mx-4"> El contador va en: {number}</p>
+			<p className="mx-4 text-white"> El contador va en: {number}</p>
 		</>
 	);
 }
@@ -102,17 +102,23 @@ export default function Example() {
 
 	return (
 		<>
-			<section className="p-100 mt-7">
-				{users.map((user) => (
-					<Profile key={user.name} user={user} />
-				))}
+			<section className="p-10 mt-7 bg-gray-900">
+				<div className="grid grid-cols-2 gap-4">
+					{users.map((user) => (
+						<Profile key={user.name} user={user} />
+					))}
+				</div>
 				<br />
-				<button onClick={() => saludar()}>Enviar</button>
-				<input type="text" onChange={mostrarTexto} onKeyUp={keyUp} />
+				<button className="bg-blue-600 hover:bg-blue-700 text-white font-bold py-2 px-4 rounded shadow-md" onClick={() => saludar()}>
+					Enviar
+				</button>
+				<input type="text" onChange={mostrarTexto} onKeyUp={keyUp} className="rounded-md p-2 mt-4 bg-gray-800 text-white" />
 				<br />
-				<ButtonExaple />
-				<ButtonExaple />
-				<ButtonExaple />
+				<div className="mt-4">
+					<ButtonExample />
+					<ButtonExample />
+					<ButtonExample />
+				</div>
 			</section>
 		</>
 	);

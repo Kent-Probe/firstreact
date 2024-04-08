@@ -2,6 +2,7 @@ import { Link } from 'react-router-dom';
 import { useDeleteHouseMutation, useGetHousesQuery } from '../../storage/features/userSlice';
 import TableHead from '../table/tableHead';
 import Swal from 'sweetalert2';
+import PageError from '../PageError';
 
 export default function HouseList() {
 	const headerTh = [
