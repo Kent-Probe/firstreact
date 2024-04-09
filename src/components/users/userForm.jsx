@@ -69,11 +69,11 @@ export default function UserForm() {
 				navigate('/user');
 			});
 		} else {
-			if(file){
-				const formData = new FormData()
-				formData.append('file', file[0])
-				uploadAvatar({id: newUser.id, file: formData});
-			}
+			// if(file){
+			// 	const formData = new FormData()
+			// 	formData.append('file', file[0])
+			// 	uploadAvatar({id: newUser.id, file: formData});
+			// }
 			Swal.fire({
 				position: 'bottom-end',
 				icon: 'success',
@@ -108,11 +108,11 @@ export default function UserForm() {
 				navigate('/register');
 			});
 		} else {
-			if(file){
-				const formData = new FormData()
-				formData.append('file', file[0])
-				uploadAvatar({id: newUser.id, file: formData});
-			}
+			// if(file){
+			// 	const formData = new FormData()
+			// 	formData.append('file', file[0])
+			// 	uploadAvatar({id: newUser.id, file: formData});
+			// }
 			Swal.fire({
 				position: 'bottom-end',
 				icon: 'success',
@@ -121,7 +121,7 @@ export default function UserForm() {
 				showConfirmButton: false,
 				timer: 3000,
 			}).then(() => {
-				navigate('/register');
+				navigate('/login');
 			});
 		}
 	};

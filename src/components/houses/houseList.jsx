@@ -1,5 +1,8 @@
 import { Link } from 'react-router-dom';
-import { useDeleteHouseMutation, useGetHousesQuery } from '../../storage/features/userSlice';
+import {
+	useDeleteHouseMutation,
+	useGetHousesQuery,
+} from '../../storage/features/userSlice';
 import TableHead from '../table/tableHead';
 import Swal from 'sweetalert2';
 import PageError from '../PageError';
@@ -13,7 +16,7 @@ export default function HouseList() {
 		{ name: 'image', className: 'text-left' },
 		{ name: 'Options', className: 'text-center' },
 	];
-    const [ deletedHouse ] = useDeleteHouseMutation();
+	const [deletedHouse] = useDeleteHouseMutation();
 	const { data: houses, isLoading, isError, error } = useGetHousesQuery();
 	if (isLoading) {
 		return (
@@ -32,36 +35,36 @@ export default function HouseList() {
 	}
 
 	const handleSubmitDeleted = (e) => {
-        Swal.fire({
-            title: 'Are you sure?',
-            text: "You won't be able to revert this!",
-            icon: 'warning',
-            showCancelButton: true,
-            confirmButtonColor: '#3085d6',
-            cancelButtonColor: '#d33',
-            confirmButtonText: 'Yes, delete it!'
-        }).then(async (result) => {
-            if (result.isConfirmed) {
-                const resultDeleted = await deletedHouse(e.target.name)
-                console.log(resultDeleted)
-                if(resultDeleted.error){
-                    Swal.fire({
-                        position: 'bottom-end',
-                        icon: 'error',
-                        title: 'Error deleted house',
-                        text: resultDeleted.error.data.message,
-                        showConfirmButton: true,
-                    })
-                }else{
-                    Swal.fire({
-                        title: 'Deleted!',
-                        text: 'Your file has been deleted.',
-                        icon: 'success',
-                    });
-                }
-            }
-        })
-    };
+		Swal.fire({
+			title: 'Are you sure?',
+			text: "You won't be able to revert this!",
+			icon: 'warning',
+			showCancelButton: true,
+			confirmButtonColor: '#3085d6',
+			cancelButtonColor: '#d33',
+			confirmButtonText: 'Yes, delete it!',
+		}).then(async (result) => {
+			if (result.isConfirmed) {
+				const resultDeleted = await deletedHouse(e.target.name);
+				console.log(resultDeleted);
+				if (resultDeleted.error) {
+					Swal.fire({
+						position: 'bottom-end',
+						icon: 'error',
+						title: 'Error deleted house',
+						text: resultDeleted.error.data.message,
+						showConfirmButton: true,
+					});
+				} else {
+					Swal.fire({
+						title: 'Deleted!',
+						text: 'Your file has been deleted.',
+						icon: 'success',
+					});
+				}
+			}
+		});
+	};
 
 	return (
 		<section className="px-10 flex justify-center pb-10 mt-7">
@@ -70,11 +73,16 @@ export default function HouseList() {
 					<TableHead headerTh={headerTh} />
 					<tbody className="text-gray-400 text-sm font-light">
 						{houses.map((house) => (
-							<tr key={house.code} className="border-b border-gray-700 hover:bg-gray-700 hover:text-white">
+							<tr
+								key={house.code}
+								className="border-b border-gray-700 hover:bg-gray-700 hover:text-white"
+							>
 								<td className="py-3 px-6 text-center">{house.code}</td>
 								<td className="py-3 px-6 text-left">{`${house.address} ${house.state}, ${house.city}`}</td>
 								<td className="py-3 px-6 text-left">
-                                    <p>Size: {house.size} m<sup>2</sup></p>
+									<p>
+										Size: {house.size} m<sup>2</sup>
+									</p>
 									<p>Parking: {house.parking ? 'yes' : 'no'}</p>
 									<p>Rooms: {house.rooms}</p>
 									<p>Bathrooms: {house.bathrooms}</p>
@@ -85,7 +93,7 @@ export default function HouseList() {
 								<td className="py-3 px-6 text-center">
 									<img
 										className="w-12 h-12 rounded-sm"
-										src={`http://localhost:3000/${house.image}`}
+										src={`${import.meta.env.APIHOUSE}${house.image}`}
 										alt="Image"
 									/>
 								</td>

@@ -1,14 +1,14 @@
 import { createApi, fetchBaseQuery } from '@reduxjs/toolkit/query/react';
 
 export const userSlice = createApi({
-    reducerPath: 'users',
+	reducerPath: 'users',
 	baseQuery: fetchBaseQuery({
-        baseUrl: 'http://localhost:3000',
-        prepareHeaders: (headers, {getState}) => {
-            const token = getState().auth.token
-            if(token) headers.set('Authorization', `Bearer ${token}`);
-            return headers;
-        }
+		baseUrl: import.meta.env.VITE_APIHOUSE,
+		prepareHeaders: (headers, { getState }) => {
+			const token = getState().auth.token;
+			if (token) headers.set('Authorization', `Bearer ${token}`);
+			return headers;
+		},
 	}),
 	endpoints: (builder) => ({
 		getUsers: builder.query({
@@ -58,45 +58,45 @@ export const userSlice = createApi({
 			}),
 			invalidatesTags: ['users', 'user'],
 		}),
-        login: builder.mutation({
-            query: (body) => ({
-                url: `/auth/login`,
-                method: 'POST',
-                body: body,
-            }),
-            invalidatesTags: ['users', 'user'],
-        }),
+		login: builder.mutation({
+			query: (body) => ({
+				url: `/auth/login`,
+				method: 'POST',
+				body: body,
+			}),
+			invalidatesTags: ['users', 'user'],
+		}),
 		getHouses: builder.query({
 			query: () => `/houses`,
-            providesTags: ['houses'],
+			providesTags: ['houses'],
 		}),
 		getHouseById: builder.query({
 			query: (code) => `/houses/${code}`,
-            providesTags: ['house'],
+			providesTags: ['house'],
 		}),
 		addHouse: builder.mutation({
 			query: (newHouse) => ({
-                url: `/houses`,
-                method: 'POST',
-                body: newHouse,
-            }),
-            invalidatesTags: ['houses', 'house'],
+				url: `/houses`,
+				method: 'POST',
+				body: newHouse,
+			}),
+			invalidatesTags: ['houses', 'house'],
 		}),
 		deleteHouse: builder.mutation({
 			query: (code) => ({
-                url: `/houses/${code}`,
-                method: 'DELETE',
-            }),
-            invalidatesTags: ['houses', 'house'],
+				url: `/houses/${code}`,
+				method: 'DELETE',
+			}),
+			invalidatesTags: ['houses', 'house'],
 		}),
 		updateHouse: builder.mutation({
 			query: (updateHouse) => ({
 				url: `/houses/${updateHouse.code}`,
-                method: 'PATCH',
-                body: updateHouse,
+				method: 'PATCH',
+				body: updateHouse,
 			}),
 			invalidatesTags: ['houses', 'house'],
-		})
+		}),
 	}),
 });
 
@@ -106,13 +106,13 @@ export const {
 	useGetUserByIdQuery,
 	useDeletedUserMutation,
 	useUpdateUserMutation,
-    useUploadAvatarMutation,
+	useUploadAvatarMutation,
 	useGetHousesQuery,
-    useGetHouseByIdQuery,
-    useAddHouseMutation,
-    useDeleteHouseMutation,
-    useUpdateHouseMutation,
-    useLoginMutation,
+	useGetHouseByIdQuery,
+	useAddHouseMutation,
+	useDeleteHouseMutation,
+	useUpdateHouseMutation,
+	useLoginMutation,
 } = userSlice;
 /* 
 const users = [

@@ -23,11 +23,12 @@ function Profile({ user }) {
 function ButtonExample() {
 	const number = useSelector((state) => state.number.value);
 	const dispatch = useDispatch();
+	
 	return (
 		<>
 			<button
 				className="ml-4 bg-blue-900 hover:bg-blue-800 text-blue-50 rounded font-bold py-2 px-4 shadow-md"
-				onClick={() => dispatch(increment())}
+				onClick={() => console.log(import.meta.env.VITE_APIHOUSE)}
 			>
 				Sumar
 			</button>

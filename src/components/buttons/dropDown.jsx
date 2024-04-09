@@ -2,17 +2,11 @@ import React, { useState } from 'react';
 import { Link } from 'react-router-dom';
 
 const Option = ({ href, d, name, bgColorVector, hoverColor, onClick }) => {
-	
-	const className = `flex items-center transform transition-colors duration-200 border-r-4 border-transparent hover:${
-		hoverColor ? hoverColor : 'border-indigo-700'
-	}`
-	console.log(className)
+	const className = `flex items-center transform transition-colors duration-200 border-r-4 border-transparent ${
+		hoverColor ? hoverColor : 'hover:border-indigo-700'
+	}`;
 	return (
-		<Link
-			to={href}
-			className={className}
-			onClick={onClick}
-		>
+		<Link to={href} className={className} onClick={onClick}>
 			<div className={`mr-3 ${bgColorVector}`}>
 				<svg
 					className="w-6 h-6"
@@ -50,7 +44,7 @@ const DropDownMenu = ({ name, src, onClick, id }) => {
 				<div className="flex justify-center items-center space-x-3">
 					<div className="w-11 h-11 rounded-full overflow-hidden border-2 dark:border-white border-gray-900">
 						<img
-							src={`http://localhost:3000/${src}`}
+							src={`${import.meta.env.APIHOUSE}${src}`}
 							alt=""
 							className="w-full h-full object-cover"
 						/>
@@ -85,7 +79,7 @@ const DropDownMenu = ({ name, src, onClick, id }) => {
 								<Option
 									name={'Logout'}
 									bgColorVector={'text-red-600'}
-									hoverColor={'border-red-600'}
+									hoverColor={'hover:border-red-600'}
 									d={
 										'M17 16l4-4m0 0l-4-4m4 4H7m6 4v1a3 3 0 01-3 3H6a3 3 0 01-3-3V7a3 3 0 013-3h4a3 3 0 013 3v1'
 									}

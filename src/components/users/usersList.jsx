@@ -18,7 +18,7 @@ export default function UserList() {
 	];
 
 	/* const users = useSelector((state) => state.users); */
-	const [ deletedUser ] = useDeletedUserMutation();
+	const [deletedUser] = useDeletedUserMutation();
 
 	const { data: users, isLoading, isError, error } = useGetUsersQuery();
 	if (isLoading)
@@ -27,7 +27,14 @@ export default function UserList() {
 				<span className="loader"></span>
 			</div>
 		);
-	else if (isError) return <PageError key={error.status} status={error.status} message={error.data.message} />;
+	else if (isError)
+		return (
+			<PageError
+				key={error.status}
+				status={error.status}
+				message={error.data.message}
+			/>
+		);
 
 	const handleSubmitDeleted = (e) => {
 		Swal.fire({
@@ -40,14 +47,14 @@ export default function UserList() {
 			confirmButtonText: 'Yes, delete it!',
 		}).then(async (result) => {
 			if (result.isConfirmed) {
-				const resultDeleted = await deletedUser(e.target.name)
-				console.log(resultDeleted)
+				const resultDeleted = await deletedUser(e.target.name);
+				console.log(resultDeleted);
 				Swal.fire({
 					title: 'Deleted!',
 					text: 'Your file has been deleted.',
 					icon: 'success',
 				});
-				window.location.reload()
+				window.location.reload();
 			}
 		});
 	};
@@ -56,13 +63,10 @@ export default function UserList() {
 		<section className="px-10 flex justify-center pb-10 mt-7">
 			<div className="overflow-hidden rounded-lg min-w-max w-full">
 				<table className="min-w-max w-full table-auto">
-					<TableHead headerTh={headerTh}
-					/>
+					<TableHead headerTh={headerTh} />
 					<tbody className="text-gray-400 text-sm font-light">
 						{users.map((user) => (
-							<tr
-								className="border-b border-gray-700 hover:bg-gray-700 hover:text-white"
-							>
+							<tr className="border-b border-gray-700 hover:bg-gray-700 hover:text-white">
 								<td className="py-3 px-6 text-center">{user.id}</td>
 								<td className="py-3 px-6 text-left">{user.name}</td>
 								<td className="py-3 px-6 text-left">{user.lastname}</td>
@@ -70,7 +74,7 @@ export default function UserList() {
 								<td className="py-3 px-6 text-center">
 									<img
 										className="w-12 h-12 rounded-full"
-										src={`http://localhost:3000/${user.avatar}`}
+										src={`${import.meta.env.APIHOUSE}${user.avatar}`}
 										alt="Avatar"
 									/>
 								</td>
